@@ -9,7 +9,7 @@ const BUCKET_NAME = "big-query-test-uni.appspot.com";
 const DATASET_NAME = "sales_data";
 const TABLE_NAME = "sales_records";
 
-exports.uploadToBigQuery = functions.https.onRequest(async (req: any, res: any): Promise<void> => {
+exports.uploadToBigQuery = functions.https.onRequest(async (req: any, res: any) => {
   try {
     const fileName: string = req.query.fileName;
     if (!fileName) {

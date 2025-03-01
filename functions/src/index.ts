@@ -9,7 +9,7 @@ const BUCKET_NAME = "big-query-test-uni.appspot.com";
 const DATASET_NAME = "sales_data";
 const TABLE_NAME = "sales_records";
 
-exports.uploadToBigQuery = functions.https.onRequest(async (req, res) => {
+exports.uploadToBigQuery = functions.https.onRequest(async (req: any, res: any) => {
   try {
     const fileName: string = req.query.fileName;
     if (!fileName) {
@@ -30,7 +30,7 @@ exports.uploadToBigQuery = functions.https.onRequest(async (req, res) => {
   }
 });
 
-exports.queryBigQuery = functions.https.onRequest(async (req, res) => {
+exports.queryBigQuery = functions.https.onRequest(async (req: any, res: any) => {
   try {
     const query = `SELECT * FROM \`${bigquery.projectId}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 100`;
     const [rows] = await bigquery.query(query);

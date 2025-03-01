@@ -30,7 +30,7 @@ exports.uploadToBigQuery = functions.https.onRequest(async (req: any, res: any) 
   }
 });
 
-exports.queryBigQuery = functions.https.onRequest(async (req: any, res: any) => {
+exports.queryBigQuery = functions.https.onRequest(async (req: any, res: any): Promise<void> => {
   try {
     const query = `SELECT * FROM \`${bigquery.projectId}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 100`;
     const [rows] = await bigquery.query(query);

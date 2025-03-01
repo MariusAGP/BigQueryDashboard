@@ -16,7 +16,7 @@ exports.uploadToBigQuery = functions.https.onRequest(async (req: any, res: any) 
       return res.status(400).send("Missing fileName parameter");
     }
 
-    const file = storage.bucket(BUCKET_NAME).file(fileName);
+    const file: any = storage.bucket(BUCKET_NAME).file(fileName);
 
     await bigquery.dataset(DATASET_NAME).table(TABLE_NAME).load(file, {
       sourceFormat: "CSV",

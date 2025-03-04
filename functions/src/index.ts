@@ -1,4 +1,6 @@
-const functions = require("firebase-functions");
+import {CallableRequest, HttpsError} from 'firebase-functions/v2/https';
+
+const { onCall } = require("firebase-functions/v2/https");
 const { Storage } = require("@google-cloud/storage");
 const { BigQuery } = require("@google-cloud/bigquery");
 
@@ -9,35 +11,54 @@ const BUCKET_NAME = "big-query-test-uni.appspot.com";
 const DATASET_NAME = "sales_data";
 const TABLE_NAME = "sales_records";
 
-exports.uploadToBigQuery = functions.https.onRequest(async (req: any, res: any): Promise<void> => {
-  try {
-    const fileName: string = req.query.fileName;
-    if (!fileName) {
-      return res.status(400).send("Missing fileName parameter");
+exports.uploadToBigQuery = onCall(
+  {
+    enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
+    consumeAppCheckToken: true, // Enable replay protection
+  },
+  async (request: CallableRequest) => {
+    if (!request.auth) {
+      throw new HttpsError("permission-denied", "Unauthorized");
     }
 
-    const file = storage.bucket(BUCKET_NAME).file(fileName);
+    const fileName: string = request.data.fileName;
+    if (!fileName) {
+      throw new HttpsError("invalid-argument", "Missing fileName parameter");
+    }
 
-    await bigquery.dataset(DATASET_NAME).table(TABLE_NAME).load(file, {
-      sourceFormat: "CSV",
-      autodetect: true,
-    });
+    try {
+      const file = storage.bucket(BUCKET_NAME).file(fileName);
+      await bigquery.dataset(DATASET_NAME).table(TABLE_NAME).load(file, {
+        sourceFormat: "CSV",
+        autodetect: true,
+      });
 
-    res.status(200).send("File uploaded to BigQuery successfully");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error uploading file to BigQuery");
+      return { message: "File uploaded to BigQuery successfully" };
+    } catch (error) {
+      console.error(error);
+      throw new HttpsError("internal", "Error processing request");
+    }
   }
-});
+);
 
-exports.queryBigQuery = functions.https.onRequest(async (req: any, res: any): Promise<void> => {
-  try {
-    const query = `SELECT * FROM \`${bigquery.projectId}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 100`;
-    const [rows] = await bigquery.query(query);
+exports.queryBigQuery = onCall(
+  {
+    enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
+    consumeAppCheckToken: true, // Enable replay protection
+  },
+  async (request: CallableRequest) => {
+    if (!request.auth) {
+      throw new HttpsError("permission-denied", "Unauthorized");
+    }
 
-    res.status(200).json(rows);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error querying BigQuery");
+    try {
+      const query = `SELECT * FROM \`${bigquery.projectId}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 100`;
+      const [rows] = await bigquery.query(query);
+
+      return { data: rows };
+    } catch (error) {
+      console.error(error);
+      throw new HttpsError("internal", "Error querying BigQuery");
+    }
   }
-});
+);

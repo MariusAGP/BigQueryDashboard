@@ -14,6 +14,7 @@ const TABLE_NAME = "sales_records";
 exports.uploadToBigQuery = onCall(
   {
     cors: true,
+    maxInstances: 2,
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
     consumeAppCheckToken: true, // Enable replay protection
   },
@@ -45,6 +46,7 @@ exports.uploadToBigQuery = onCall(
 exports.queryBigQuery = onCall(
   {
     cors: true,
+    maxInstances: 2,
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
     consumeAppCheckToken: true, // Enable replay protection
   },

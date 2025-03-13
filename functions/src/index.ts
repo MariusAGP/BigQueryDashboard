@@ -16,7 +16,6 @@ exports.uploadToBigQuery = onCall(
     cors: true,
     maxInstances: 2,
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
-    consumeAppCheckToken: true, // Enable replay protection
   },
   async (request: CallableRequest) => {
     if (!request.auth) {
@@ -48,7 +47,6 @@ exports.queryBigQuery = onCall(
     cors: true,
     maxInstances: 2,
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
-    consumeAppCheckToken: true, // Enable replay protection
   },
   async (request: CallableRequest) => {
     if (!request.auth) {

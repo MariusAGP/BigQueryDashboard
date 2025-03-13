@@ -7,7 +7,7 @@ import {getAuth, provideAuth} from '@angular/fire/auth';
 import {getFunctions, provideFunctions} from '@angular/fire/functions';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { initializeAppCheck, provideAppCheck } from '@angular/fire/app-check';
-import { ReCaptchaEnterpriseProvider } from '@firebase/app-check';
+import { ReCaptchaV3Provider } from '@firebase/app-check';
 import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideFunctions(() => getFunctions()),
     provideCharts(withDefaultRegisterables()),
     provideAppCheck(() => initializeAppCheck(getApp(), {
-      provider: new ReCaptchaEnterpriseProvider(environment.appCheckToken),
+      provider: new ReCaptchaV3Provider(environment.appCheckToken),
       isTokenAutoRefreshEnabled: true
     }))
   ],

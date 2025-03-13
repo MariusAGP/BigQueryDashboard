@@ -11,7 +11,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci && npm run build
+      - run: npm ci
+      - run: |
+          echo "export const environment = {
+            firebaseConfig: {
+              apiKey: '${{ secrets.FIREBASE_API_KEY }}',
+              authDomain: 'big-query-test-uni.firebaseapp.com',
+              projectId: 'big-query-test-uni',
+              storageBucket: 'big-query-test-uni.firebasestorage.app',
+              messagingSenderId: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}',
+              appId: '${{ secrets.FIREBASE_APP_ID }}',
+              measurementId: 'G-C9X8M3NN3V'
+            },
+            appCheckToken: '${{ secrets.APP_CHECK_TOKEN }}'
+          };" > src/environments/environment.ts
+      - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

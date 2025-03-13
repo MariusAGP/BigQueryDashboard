@@ -43,3 +43,6 @@ Thumbs.db
 
 # Firebase
 firebase-debug.log
+
+# Local Dev Environment
+src/environments/environment.development.ts

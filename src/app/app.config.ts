@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideFunctions(() => getFunctions()),
     provideCharts(withDefaultRegisterables()),
     provideAppCheck(() => initializeAppCheck(getApp(), {
-      provider: new ReCaptchaV3Provider("sdfsdffsdfds"),
+      provider: new ReCaptchaV3Provider(environment.appCheckToken),
       isTokenAutoRefreshEnabled: true
     }))
   ],

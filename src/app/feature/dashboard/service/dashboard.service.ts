@@ -13,7 +13,6 @@ export class DashboardService {
     const queryFunction = httpsCallable(
       this.functions,
       "uploadToBigQuery",
-      { limitedUseAppCheckTokens: true }
     );
     return from(queryFunction( {fileName} ))
   }
@@ -22,7 +21,6 @@ export class DashboardService {
     const queryFunction = httpsCallable<void, { data: Sales[] }>(
       this.functions,
       "queryBigQuery",
-      { limitedUseAppCheckTokens: true }
     );
 
     return from(queryFunction()).pipe(

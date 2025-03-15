@@ -14,7 +14,7 @@ export class DashboardService {
       this.functions,
       "uploadToBigQuery",
     );
-    return from(queryFunction( {fileName} ))
+    return from(queryFunction({fileName}))
   }
 
   callQueryBigQuery(): Observable<Sales[]> {
@@ -24,7 +24,27 @@ export class DashboardService {
     );
 
     return from(queryFunction()).pipe(
-      map((response: any) => response.data)
-    );
+      map((response: any) => {
+          return response.data.map(this.mapBigQueryRowToSales);
+        }
+      ));
+  }
+
+  private mapBigQueryRowToSales(row: any): Sales {
+    return {
+      region: row["Region"],
+      country: row["Country"],
+      salesChannel: row["Sales Channel"],
+      orderPriority: row["Order Priority"],
+      orderDate: row["Order Date"]?.value,
+      orderId: row["Order ID"],
+      shipDate: row["Ship Date"]?.value,
+      unitsSold: row["Units Sold"],
+      unitPrice: row["Unit Price"],
+      unitCost: row["Unit Cost"],
+      totalRevenue: row["Total Revenue"],
+      totalCost: row["Total Cost"],
+      totalProfit: row["Total Profit"],
+    };
   }
 }

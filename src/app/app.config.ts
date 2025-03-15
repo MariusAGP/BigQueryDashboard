@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFunctions(() => getFunctions()),
+    provideFunctions(() => getFunctions(getApp(), "europe-west3")),
     provideCharts(withDefaultRegisterables()),
     provideAppCheck(() => initializeAppCheck(getApp(), {
       provider: new ReCaptchaV3Provider(environment.appCheckToken),

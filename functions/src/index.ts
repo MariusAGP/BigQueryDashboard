@@ -58,7 +58,7 @@ exports.queryBigQuery = onCall(
       const query = `SELECT * FROM \`${PROJECT_ID}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 1000`;
       const [rows] = await bigquery.query(query);
 
-      return { data: rows };
+      return rows;
     } catch (error) {
       console.error(error);
       throw new HttpsError("internal", "Error querying BigQuery");

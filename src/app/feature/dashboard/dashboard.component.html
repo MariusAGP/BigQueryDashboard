@@ -3,13 +3,13 @@
     <div class="col text-center">
       <div class="row justify-content-center align-items-center">
         <div class="col-3">
-          <button style="width: 100%" mat-raised-button type="button" (click)="loadChartData()" [disabled]="isLoading || !uploadDone">
+          <button style="width: 100%" mat-raised-button type="button" (click)="loadChartData()" [disabled]="isLoading">
             Load Sales Data
           </button>
         </div>
 
         <div class="col-3">
-          <button style="width: 100%;" mat-raised-button type="button" (click)="startUploadToBigQuery()">
+          <button style="width: 100%;" mat-raised-button type="button" (click)="startUploadToBigQuery()" [disabled]="isLoading">
             Upload to Big Query
           </button>
         </div>

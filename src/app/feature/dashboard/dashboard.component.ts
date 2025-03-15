@@ -69,7 +69,7 @@ export class DashboardComponent {
           datasets: [
             {
               data: topCountries.map((s) => s.totalProfit), // Assign profits to data
-              label: 'Top 5 Countries by Profit',
+              label: 'Total Profit',
             },
           ],
         };

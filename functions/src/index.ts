@@ -10,10 +10,12 @@ const bigquery = new BigQuery();
 const BUCKET_NAME = "big-query-test-uni.firebasestorage.app";
 const DATASET_NAME = "sales_data";
 const TABLE_NAME = "sales_records";
+const PROJECT_ID = "big-query-test-uni"
 
 exports.uploadToBigQuery = onCall(
   {
     maxInstances: 2,
+    region: "europe-west3", // Frankfurt
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
   },
   async (request: CallableRequest) => {
@@ -44,6 +46,7 @@ exports.uploadToBigQuery = onCall(
 exports.queryBigQuery = onCall(
   {
     maxInstances: 2,
+    region: "europe-west3", // Frankfurt
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
   },
   async (request: CallableRequest) => {
@@ -52,7 +55,7 @@ exports.queryBigQuery = onCall(
     }
 
     try {
-      const query = `SELECT * FROM \`${bigquery.projectId}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 100`;
+      const query = `SELECT * FROM \`${PROJECT_ID}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 1000`;
       const [rows] = await bigquery.query(query);
 
       return { data: rows };

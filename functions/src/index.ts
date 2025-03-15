@@ -7,7 +7,7 @@ const { BigQuery } = require("@google-cloud/bigquery");
 const storage = new Storage();
 const bigquery = new BigQuery();
 
-const BUCKET_NAME = "big-query-test-uni.appspot.com";
+const BUCKET_NAME = "big-query-test-uni.firebasestorage.app";
 const DATASET_NAME = "sales_data";
 const TABLE_NAME = "sales_records";
 

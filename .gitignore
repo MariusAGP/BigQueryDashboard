@@ -47,10 +47,6 @@ firebase-debug.log
 # Local Dev Environment
 src/environments/environment.development.ts
 
-A good .gitignore file for your Terraform project helps prevent sensitive data and unnecessary files from being committed to your version control system. Here's a comprehensive list of what you should typically include:
-
-Code-Snippet
-
 # Terraform files
 terraform/.terraform/
 terraform/*.tfstate

@@ -15,6 +15,7 @@ const PROJECT_ID = "big-query-test-uni"
 exports.uploadToBigQuery = onCall(
   {
     maxInstances: 2,
+    serviceAccount: "big-query-upload-user@big-query-test-uni.iam.gserviceaccount.com",
     region: "europe-west3", // Frankfurt
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
   },
@@ -47,6 +48,7 @@ exports.queryBigQuery = onCall(
   {
     maxInstances: 2,
     region: "europe-west3", // Frankfurt
+    serviceAccount: "big-query-fetch-user@big-query-test-uni.iam.gserviceaccount.com",
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
   },
   async (request: CallableRequest) => {

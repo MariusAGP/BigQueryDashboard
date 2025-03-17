@@ -52,6 +52,9 @@ resource "google_project_service" "default" {
     "cloudresourcemanager.googleapis.com",
     "firebase.googleapis.com",
     "serviceusage.googleapis.com",
+    "firebasestorage.googleapis.com",
+    "firebaseappcheck.googleapis.com",
+    "identitytoolkit.googleapis.com"
   ])
   service = each.key
 
@@ -66,6 +69,48 @@ resource "google_firebase_project" "default" {
 
   # Waits for the required APIs to be enabled.
   depends_on = [
+    google_project_service.default
+  ]
+}
+
+# Creates the web app
+module "firebase_web_app" {
+  source = "./modules/firebase-web-app"
+  project_id = google_project.default.project_id
+
+  depends_on = [
+    google_firebase_project.default
+  ]
+}
+
+# Creates storage bucket for sales files
+module "firebase_storage" {
+  source = "./modules/firebase-storage"
+  project_id = google_project.default.project_id
+
+  depends_on = [
+    google_firebase_project.default
+  ]
+}
+
+# Enabled App Check for the project
+module "firebase_app_check" {
+  source = "./modules/firebase-app-check"
+  web_app_id = module.firebase_web_app.web_app_app_id
+  project_id = google_project.default.project_id
+
+  depends_on = [
+    module.firebase_web_app
+  ]
+}
+
+# Add Firebase Authentication
+module "firebase_auth" {
+  source = "./modules/firebase-auth"
+  project_id = google_project.default.project_id
+
+  depends_on = [
+    module.firebase_web_app,
     google_project_service.default
   ]
 }

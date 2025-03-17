@@ -114,3 +114,13 @@ module "firebase_auth" {
     google_project_service.default
   ]
 }
+
+# Add Big Query
+module "big_query" {
+  source = "./modules/big-query"
+  project_id = google_project.default.project_id
+
+  depends_on = [
+    google_project.default
+  ]
+}

@@ -14,7 +14,11 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
         working-directory: functions
+
+      - name: Set FIREBASE_PROJECT_ID
+        run: echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
+
       - uses: aronep6/action-functions-deploy@v1.0.0
         with:
-          serviceAccountKey: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BIG_QUERY_TEST_UNI }}
-          projectId: big-query-test-uni
+          serviceAccountKey: ${{ secrets.FIREBASE_DEPLOY_SERVICE_ACCOUNT_KEY }}
+          projectId: ${{ secrets.FIREBASE_PROJECT_ID }}

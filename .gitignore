@@ -46,3 +46,14 @@ firebase-debug.log
 
 # Local Dev Environment
 src/environments/environment.development.ts
+
+# Terraform files
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/*.tfvars
+terraform/*.tfvars.json
+terraform/override.tf
+terraform/override-*.tf
+terraform/*.terraformrc
+terraform/terraform.rc

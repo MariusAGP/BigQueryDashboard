@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideFunctions(() => getFunctions(getApp(), "europe-west3")),
     provideCharts(withDefaultRegisterables()),
     provideAppCheck(() => initializeAppCheck(getApp(), {
-      provider: new ReCaptchaV3Provider(environment.appCheckToken),
+      provider: new ReCaptchaV3Provider(environment.appCheckSiteKey),
       isTokenAutoRefreshEnabled: true
     }))
   ],

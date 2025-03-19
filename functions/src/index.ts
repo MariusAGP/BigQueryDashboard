@@ -7,15 +7,15 @@ const { BigQuery } = require("@google-cloud/bigquery");
 const storage = new Storage();
 const bigquery = new BigQuery();
 
-const BUCKET_NAME = "big-query-test-uni.firebasestorage.app";
+const PROJECT_ID: string = process.env.FIREBASE_PROJECT_ID || "fallback"
+const BUCKET_NAME = `${PROJECT_ID}.firebasestorage.app`;
 const DATASET_NAME = "sales_data";
 const TABLE_NAME = "sales_records";
-const PROJECT_ID = "big-query-test-uni"
 
 exports.uploadToBigQuery = onCall(
   {
     maxInstances: 2,
-    serviceAccount: "big-query-upload-user@big-query-test-uni.iam.gserviceaccount.com",
+    serviceAccount: `big-query-upload-user@${PROJECT_ID}.iam.gserviceaccount.com`,
     region: "europe-west3", // Frankfurt
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
   },
@@ -48,7 +48,7 @@ exports.queryBigQuery = onCall(
   {
     maxInstances: 2,
     region: "europe-west3", // Frankfurt
-    serviceAccount: "big-query-fetch-user@big-query-test-uni.iam.gserviceaccount.com",
+    serviceAccount: `big-query-fetch-user@${PROJECT_ID}.iam.gserviceaccount.com`,
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
   },
   async (request: CallableRequest) => {

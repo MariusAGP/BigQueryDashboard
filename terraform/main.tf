@@ -54,7 +54,10 @@ resource "google_project_service" "default" {
     "serviceusage.googleapis.com",
     "firebasestorage.googleapis.com",
     "firebaseappcheck.googleapis.com",
-    "identitytoolkit.googleapis.com"
+    "identitytoolkit.googleapis.com",
+    "run.googleapis.com",
+    "eventarc.googleapis.com",
+    "bigquery.googleapis.com"
   ])
   service = each.key
 
@@ -121,6 +124,37 @@ module "big_query" {
   project_id = google_project.default.project_id
 
   depends_on = [
+    google_project.default,
+    google_project_service.default
+  ]
+}
+
+# Add custom roles
+module "custom_roles" {
+  source = "./modules/custom-roles"
+  project_id = google_project.default.project_id
+
+  depends_on = [
     google_project.default
+  ]
+}
+
+# Add required service accounts
+module "service_accounts" {
+  source = "./modules/service-accounts"
+  project_id = google_project.default.project_id
+
+  depends_on = [
+    module.custom_roles
+  ]
+}
+
+# Upload the initial sales file
+module "upload_sales" {
+  source = "./modules/upload-sales"
+  bucket_name = module.firebase_storage.bucket_name
+
+  depends_on = [
+    module.firebase_storage
   ]
 }

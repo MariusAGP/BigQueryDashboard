@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "big-query-test-uni"
+    "default": "{{PROJECT_ID}}"
   }
 }

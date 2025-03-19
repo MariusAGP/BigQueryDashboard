@@ -16,7 +16,9 @@ jobs:
         working-directory: functions
 
       - name: Set FIREBASE_PROJECT_ID
-        run: echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
+        run: |
+          touch .env
+          echo FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }} >> .env
 
       - uses: aronep6/action-functions-deploy@v1.0.0
         with:

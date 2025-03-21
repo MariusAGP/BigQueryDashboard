@@ -1,4 +1,17 @@
-resource "google_storage_bucket" "default" {
+resource "google_firebaserules_release" "primary" {
+  provider     = google-beta
+  name         = "firebase.storage/${google_storage_bucket.bucket.name}"
+  ruleset_name = "projects/${var.project_id}/rulesets/${google_firebaserules_ruleset.storage.name}"
+  project      = var.project_id
+
+  lifecycle {
+    replace_triggered_by = [
+      google_firebaserules_ruleset.storage
+    ]
+  }
+}
+
+resource "google_storage_bucket" "bucket" {
   provider                    = google-beta
   project                     = var.project_id
   name                        = "${var.project_id}-storage"
@@ -6,8 +19,24 @@ resource "google_storage_bucket" "default" {
   uniform_bucket_level_access = true
 }
 
-resource "google_firebase_storage_bucket" "default" {
+resource "google_firebase_storage_bucket" "bucket" {
   provider  = google-beta
   project   = var.project_id
-  bucket_id = google_storage_bucket.default.id
+  bucket_id = google_storage_bucket.bucket.id
+}
+
+# Create a ruleset of Firebase Security Rules from a local file.
+resource "google_firebaserules_ruleset" "storage" {
+  provider = google-beta
+  project  = var.project_id
+  source {
+    files {
+      name    = "storage.rules"
+      content = "rules_version = '2'; service firebase.storage { match /b/{bucket}/o/{object=**} { allow read: if request.auth != null; allow write: if request.auth != null; allow delete: if request.auth != null; } }"
+    }
+  }
+
+  depends_on = [
+    google_firebase_storage_bucket.bucket
+  ]
 }

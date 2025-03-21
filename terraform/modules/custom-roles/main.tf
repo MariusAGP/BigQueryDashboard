@@ -17,7 +17,7 @@ resource "google_project_iam_custom_role" "big-query-fetch-table" {
 }
 
 resource "google_project_iam_custom_role" "big-query-update-table" {
-  permissions = ["bigquery.tables.updateData"]
+  permissions = ["bigquery.tables.updateData", "bigquery.jobs.create", "bigquery.tables.create"]
   role_id = "bigQueryUpdateTable"
   title   = "Big Query Update Table"
   description = "Roles for updating data of big query table"

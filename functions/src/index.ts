@@ -3,19 +3,19 @@ import {CallableRequest, HttpsError} from 'firebase-functions/v2/https';
 const { onCall } = require("firebase-functions/v2/https");
 const { Storage } = require("@google-cloud/storage");
 const { BigQuery } = require("@google-cloud/bigquery");
-const { params } = require("firebase-functions/params");
+const { projectID } = require("firebase-functions/params");
 
 const storage = new Storage();
 const bigquery = new BigQuery();
 
-const BUCKET_NAME = `${params.projectID}.firebasestorage.app`;
+const BUCKET_NAME = `${projectID.value()}.firebasestorage.app`;
 const DATASET_NAME = "sales_data";
 const TABLE_NAME = "sales_records";
 
 exports.uploadToBigQuery = onCall(
   {
     maxInstances: 2,
-    serviceAccount: `big-query-upload-user@${params.projectID}.iam.gserviceaccount.com`,
+    serviceAccount: `big-query-upload-user@${projectID.value()}.iam.gserviceaccount.com`,
     region: "europe-west3", // Frankfurt
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
   },
@@ -48,7 +48,7 @@ exports.queryBigQuery = onCall(
   {
     maxInstances: 2,
     region: "europe-west3", // Frankfurt
-    serviceAccount: `big-query-fetch-user@${params.projectID}.iam.gserviceaccount.com`,
+    serviceAccount: `big-query-fetch-user@${projectID.value()}.iam.gserviceaccount.com`,
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
   },
   async (request: CallableRequest) => {
@@ -57,7 +57,7 @@ exports.queryBigQuery = onCall(
     }
 
     try {
-      const query = `SELECT * FROM \`${params.projectID}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 1000`;
+      const query = `SELECT * FROM \`${projectID.value()}.${DATASET_NAME}.${TABLE_NAME}\` LIMIT 1000`;
       const [rows] = await bigquery.query(query);
 
       return rows;

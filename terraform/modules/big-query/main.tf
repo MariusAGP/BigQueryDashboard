@@ -16,85 +16,85 @@ resource "google_bigquery_table" "default" {
   {
     "name": "Region",
     "type": "STRING",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "The sales region"
   },
   {
     "name": "Country",
     "type": "STRING",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "The sales country"
   },
   {
     "name": "Item Type",
     "type": "STRING",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Item type"
   },
   {
     "name": "Sales Channel",
     "type": "STRING",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Sales Channel"
   },
   {
     "name": "Order Priority",
     "type": "STRING",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Order Priority"
   },
   {
     "name": "Order Date",
     "type": "DATE",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Order Date"
   },
   {
     "name": "Order ID",
     "type": "INTEGER",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Order ID"
   },
   {
     "name": "Ship Date",
     "type": "DATE",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Ship Date"
   },
   {
     "name": "Units Sold",
     "type": "INTEGER",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Units Sold"
   },
   {
     "name": "Unit Price",
     "type": "FLOAT",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Unit Price"
   },
   {
     "name": "Unit Cost",
     "type": "FLOAT",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Unit Cost"
   },
   {
     "name": "Total Revenue",
     "type": "FLOAT",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Total Revenue"
   },
   {
     "name": "Total Cost",
     "type": "FLOAT",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Total Cost"
   },
   {
     "name": "Total Profit",
     "type": "FLOAT",
-    "mode": "REQUIRED",
+    "mode": "NULLABLE",
     "description": "Total Profit"
   }
 ]

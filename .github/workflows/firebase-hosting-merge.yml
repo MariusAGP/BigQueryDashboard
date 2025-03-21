@@ -15,20 +15,20 @@ jobs:
       - run: |
           echo "export const environment = {
             firebaseConfig: {
-              apiKey: '${{ secrets.FIREBASE_API_KEY }}',
-              authDomain: '${{ secrets.FIREBASE_PROJECT_ID }}.firebaseapp.com',
-              projectId: '${{ secrets.FIREBASE_PROJECT_ID }}',
-              storageBucket: '${{ secrets.FIREBASE_PROJECT_ID }}.firebasestorage.app',
-              messagingSenderId: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}',
-              appId: '${{ secrets.FIREBASE_APP_ID }}'
+              apiKey: '${{ vars.FIREBASE_API_KEY }}',
+              authDomain: '${{ vars.FIREBASE_PROJECT_ID }}.firebaseapp.com',
+              projectId: '${{ vars.FIREBASE_PROJECT_ID }}',
+              storageBucket: '${{ vars.FIREBASE_PROJECT_ID }}.firebasestorage.app',
+              messagingSenderId: '${{ vars.FIREBASE_MESSAGING_SENDER_ID }}',
+              appId: '${{ vars.FIREBASE_APP_ID }}'
             },
-            appCheckSiteKey: '${{ secrets.APP_CHECK_SITE_KEY }}'
+            appCheckSiteKey: '${{ vars.APP_CHECK_SITE_KEY }}'
           };" > src/environments/environment.ts
         shell: bash
 
       - name: Replace PROJECT_ID in .firebaserc
         run: |
-          sed -i 's/{{PROJECT_ID}}/${{ secrets.FIREBASE_PROJECT_ID }}/g' .firebaserc
+          sed -i 's/{{PROJECT_ID}}/${{ vars.FIREBASE_PROJECT_ID }}/g' .firebaserc
         shell: bash
 
       - name: Deploy Storage Rules
@@ -37,7 +37,7 @@ jobs:
           args: deploy --only storage --non-interactive
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_DEPLOY_SERVICE_ACCOUNT_KEY }}
-          PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
 
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -45,4 +45,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_DEPLOY_SERVICE_ACCOUNT_KEY }}
           channelId: live
-          projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
+          projectId: ${{ vars.FIREBASE_PROJECT_ID }}

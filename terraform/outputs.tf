@@ -25,13 +25,15 @@ output "recaptcha_key_placeholder_warning" {
 
 output "next_steps" {
   value = <<EOT
-    [NEXT_STEPS]: Create Github Action Secrets with the corresponding values ->
+    [NEXT_STEPS]: Create Github Action Repository Variables with the corresponding values ->
     APP_CHECK_SITE_KEY = reCAPTCHA site key
     FIREBASE_API_KEY = main_web_app_api_key
     FIREBASE_APP_ID = main_web_app_id
-    FIREBASE_DEPLOY_SERVICE_ACCOUNT_KEY = Create a key for the service account github deploy in GCP
     FIREBASE_MESSAGING_SENDER_ID = main_web_app_messaging_sender_id
     FIREBASE_PROJECT_ID = main_web_app_project_id
+
+    [IMPORTANT]: Create a Github Action Repository Secret for:
+    FIREBASE_DEPLOY_SERVICE_ACCOUNT_KEY = Create a key for the service account [github deploy] in GCP
   EOT
   description = "Short text explaining the next steps"
 }

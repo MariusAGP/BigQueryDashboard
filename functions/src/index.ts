@@ -8,7 +8,7 @@ const { projectID } = require("firebase-functions/params");
 const storage = new Storage();
 const bigquery = new BigQuery();
 
-const BUCKET_NAME = `${projectID.value()}.firebasestorage.app`;
+const BUCKET_NAME = `${projectID.value()}-storage`;
 const DATASET_NAME = "sales_data";
 const TABLE_NAME = "sales_records";
 

@@ -24,10 +24,12 @@ jobs:
             },
             appCheckSiteKey: '${{ secrets.APP_CHECK_SITE_KEY }}'
           };" > src/environments/environment.ts
+        shell: bash
 
       - name: Replace PROJECT_ID in .firebaserc
         run: |
           sed -i 's/{{PROJECT_ID}}/${{ secrets.FIREBASE_PROJECT_ID }}/g' .firebaserc
+        shell: bash
 
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0

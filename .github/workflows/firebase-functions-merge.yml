@@ -18,6 +18,7 @@ jobs:
       - name: Set FIREBASE_PROJECT_ID
         run: |
           echo "export const projectId = '${{ secrets.FIREBASE_PROJECT_ID }}'" >> src/environment.ts
+        shell: bash
 
       - uses: aronep6/action-functions-deploy@v1.0.0
         with:

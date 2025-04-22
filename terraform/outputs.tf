@@ -21,7 +21,7 @@ output "main_web_app_project_id" {
 output "next_steps" {
   value = <<EOT
     [NEXT_STEPS]: Create Github Action Repository Variables with the corresponding values ->
-    APP_CHECK_SITE_KEY = [IMPORTANT]: generate a reCAPTCHA key pair v3:
+    APP_CHECK_SITE_KEY = [IMPORTANT]: generate a reCAPTCHA key pair v3 with domain:
     https://www.google.com/recaptcha/admin/
     After generating, place the public key here as the variable APP_CHECK_SITE_KEY
     and put the private key in firebase console app check.

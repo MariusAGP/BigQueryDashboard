@@ -1,3 +1,4 @@
+# Enable app check for the application. Placeholder key used.
 resource "time_sleep" "wait_30s" {
   create_duration = "30s"
 }

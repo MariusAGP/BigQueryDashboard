@@ -25,14 +25,15 @@ resource "google_firebase_storage_bucket" "bucket" {
   bucket_id = google_storage_bucket.bucket.id
 }
 
-# Create a ruleset of Firebase Security Rules from a local file.
+# Create a ruleset of Firebase Security Rules from string.
+# Service Accounts bypass rules anyway. Read is allowed to check if file exists.
 resource "google_firebaserules_ruleset" "storage" {
   provider = google-beta
   project  = var.project_id
   source {
     files {
       name    = "storage.rules"
-      content = "rules_version = '2'; service firebase.storage { match /b/{bucket}/o/{object=**} { allow read: if request.auth != null; allow write: if request.auth != null; allow delete: if request.auth != null; } }"
+      content = "rules_version = '2'; service firebase.storage { match /b/{bucket}/o/{object=**} { allow read: if request.auth != null; allow write: if false; allow delete: if false; } }"
     }
   }
 

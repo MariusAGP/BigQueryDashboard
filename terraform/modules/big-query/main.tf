@@ -1,3 +1,4 @@
+# Create Big Query with schema for sales data
 resource "google_bigquery_dataset" "default" {
   project       = var.project_id
   dataset_id    = "sales_data"
